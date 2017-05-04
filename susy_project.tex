@@ -1,0 +1,369 @@
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc} 
+\usepackage{amsmath}
+\usepackage{cancel}
+\usepackage{bbold}
+\usepackage{color}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{braket}
+\usepackage{float}
+\usepackage{lscape}
+\usepackage{multicol}
+\usepackage{tikz-feynman}
+\usepackage{tikz}
+\usepackage{subcaption}
+\usepackage{multicol}
+
+\usepackage{geometry}
+\geometry{legalpaper, margin=0.5in}
+
+\begin{document}
+\title{Supersymmetric QCD at the LHC}
+\author{Ingrid A V Holm}
+\maketitle
+
+\section*{Outline}
+\begin{flushleft}
+This project will contain the following
+\begin{itemize}
+\item A motivation for supersymmetry; what \textit{is} supersymmetry and what is the motivation for it? An introduction.
+\item A calculation of the QCD production of squarks at the LHC, i.e. $qq' \rightarrow \tilde{q} \tilde{q}'$.
+\item Calculate the NLO terms using Prospino \cite{beenakker1996prospino} and compare to the analytic calculation. What does this mean for the error in the cross section?
+\item Compare with data (from ATLAS?) to look for jets or some process with final state leptons (not decided yet). 
+\begin{align*}
+\tilde{q} &\rightarrow q \tilde{\chi}_0^1\\
+\tilde{q} &\rightarrow q' \tilde{\chi}_0^+ \rightarrow q' l \tilde{\chi}_0^1
+\end{align*}
+\end{itemize}
+\end{flushleft}
+
+\section{Why supersymmetry?}
+
+\begin{flushleft}
+Hierarchy problem.
+\end{flushleft}
+
+\pagebreak
+
+\section{QCD squark production}
+
+\begin{flushleft}
+The feynman diagram for the process 
+\begin{align*}
+qq \rightarrow \tilde{q} \tilde{q},
+\end{align*}
+is given in Fig. (\ref{fig::Feynman qq}). The total matrix element gets a contribution from the $t$- and $u$-channel.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (p1) {\(q_i\)}; \vertex [right= of p1] (s1); \vertex [right= of s1] (q1){\(\tilde{q}_i\)}; \vertex [below=of p1] (p2) {\(q_j\)}; \vertex [right=of p2] (s2) ; \vertex [right= of s2] (q2) {\(\tilde{q}_j\)} ;
+\diagram{
+(p1) --[fermion, momentum=\(k_1\)] (s1) -- [scalar, momentum=\(p_1\)] (q1), (s1)-- [gluon] (s2) -- (s1), (p2) --[fermion, momentum=\(k_2\)] (s2) --[scalar, momentum=\(p_2\)] (q2)
+};
+\end{feynman}
+\end{tikzpicture}
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (p1) {\(q_i\)}; \vertex [right= of p1] (s1); \vertex [right= of s1] (q1){\(\tilde{q}_i\)}; \vertex [below=of p1] (p2) {\(q_j\)}; \vertex [right=of p2] (s2) ; \vertex [right= of s2] (q2) {\(\tilde{q}_j\)} ;
+\diagram{
+(p1) --[fermion] (s1) -- [scalar] (q2), (s1)-- [gluon] (s2) -- (s1), (p2) --[fermion] (s2) --[scalar] (q1)
+};
+\end{feynman}
+\end{tikzpicture}
+\caption{Feynman diagrams for squark pair production in quark quark collisions, both $t$ and $u$ diagram. Notice that the u-channel (right diagram) is only possible for $i=j$.}
+\label{fig::Feynman qq}
+\end{figure}
+The momentum of the gluino is denoted $p$ in the calculations, and defined as $p= k_2-p_2 $ for the $t$-channel and $p=k_2-p_1$ for the $u$-channel. The chiralitites are decided later, and are simply denoted as $P$ and $P'$ for now. The expression for the matrix element becomes (reading direction is from $q_j$ to $q_i$)
+\begin{align*}
+i \mathcal{M} &= \bar{v} (k_1) \Big( -i \sqrt{2} g P (t_a)^{ij}\Big) \times \delta^{ab} \frac{i}{\cancel{p} - m_{\tilde{g}}} \times \Big( -i \sqrt{2} gP'(t_b)^{lk} \Big) \times u(k_2)\\
+&= - \frac{i 2 g^2}{p^2 - m_{\tilde{g}}^2 + i \epsilon}\big( \bar{v} (k_1)  P (t_a)^{ij}(\cancel{p} + m_{\tilde{g}}) P'(t^a)^{lk} u(k_2) \big)\\
+&= - (t_a)^{ij}(t^a)^{lk} \times \frac{i 2 g^2}{t_g^2} \times  \bar{v} (k_1)  P (\cancel{p} + m_{\tilde{g}}) P' u(k_2) ,
+\end{align*}
+where the color factor has been factored out. The charge conjugate becomes
+\begin{align*}
+i \mathcal{\bar{M}} & = (t_a)^{ij}(t^a)^{lk} \times \frac{i 2 g^2}{t_g^2} \times \bar{u} (k_2)  P (\cancel{p} + m_{\tilde{g}}) P' v(k_1) .
+\end{align*}
+Some Mandelstam variables have been used to clean up the expresson; $t= p^2 = (k_2 - p_2)^2$, $t_g = t - m_{\tilde{g}}^2$. The matrix element squared is then
+\begin{align*}
+|\mathcal{M}_t|^2 &=  (t_a)^{ij} (t^a)^{lk} (t_b)^{mn} (t^b)^{op} \times \frac{4 g^4}{t_g^2}
+\big( \bar{v} (k_1)  P (\cancel{p} + m_{\tilde{g}}) P' u(k_2) \big)
+\big( \bar{u} (k_2)  P (\cancel{p} + m_{\tilde{g}}) P' v(k_1) \big)
+\end{align*}
+Now average over spin
+\begin{align*}
+\sum |\mathcal{M}_t|^2 &=A_{color, t} \times  \frac{4 g^4}{t_g^2} \text{tr} \big[
+(\cancel{k}_1 - m_q)  P (\cancel{p} + m_{\tilde{g}}) P' (\cancel{k}_2 + m_q)  P (\cancel{p} + m_{\tilde{g}}) P' \big],
+\end{align*}
+where $A_{color, t}= (t_a)^{ij} (t^a)^{lk} (t_b)^{mn} (t^b)^{op}$. Since the quark mass is small compared to $m_g$, $m_{\tilde{q}}$ and $m_{\tilde{g}}$, we set $m_q=0$ and obtain
+\begin{align*}
+\sum |\mathcal{M}|^2 &= A_{color, t} \times \frac{4 g^4}{t_g^2} \text{tr} \big[ 
+\cancel{k}_1 P (\cancel{p} + m_{\tilde{g}}) P' \cancel{k}_2 P (\cancel{p} + m_{\tilde{g}}) P' \big]\\
+\end{align*}
+At this point we need to consider the different combinations of chiralities. The traces for the different cases are
+\begin{center}
+\textit{Different chiralities }$P=P_{R/L}$, $P'=P_{L/R}$
+\end{center}
+\begin{align*}
+\text{tr} \big[ 
+\cancel{k}_1 P_{R/L} (\cancel{p} + m_{\tilde{g}}) P_{L/R} \cancel{k}_2 P_{R/L} (\cancel{p} + m_{\tilde{g}}) P_{L/R} \big]=& \text{tr} \big[ 
+\cancel{k}_1 P_{R/L} (\cancel{p} + m_{\tilde{g}}) P_{L/R} \cancel{k}_2(\cancel{p} + m_{\tilde{g}}) P_{L/R} \big] \\
+=& \text{tr} \big[ 
+\cancel{k}_1 P_{R/L} \cancel{p} P_{L/R} \cancel{k}_2 \cancel{p} P_{L/R}
++ m_{\tilde{g}} \cancel{k}_1 P_{R/L} \cancel{p} P_{L/R} \cancel{k}_2  P_{L/R}\\
+&+ m_{\tilde{g}} \cancel{k}_1 P_{R/L}  P_{L/R} \cancel{k}_2\cancel{p} P_{L/R}
++ m_{\tilde{g}}^2 \cancel{k}_1 P_{R/L} P_{L/R} \cancel{k}_2  P_{L/R} \big]\\
+=& \text{tr} \big[ P_{L/R} 
+\cancel{k}_1 \cancel{p} \cancel{k}_2 \cancel{p}  \big]\\
+&= \text{tr} \big[
+ P_{R/L}[2 p \cdot k \cancel{k}_1 \cancel{p} - p^2\cancel{k}_1 \cancel{k}_2 ]  \big]\\
+ &=\frac{1}{2} \text{tr} \big[
+2 p \cdot k_2 \cancel{k}_1 \cancel{p} - p^2\cancel{k}_1 \cancel{k}_2 \big]\\
+&= 2 \big(
+2 (p \cdot k_2) (k_1 \cdot p) - p^2 (k_1 \cdot k_2)\big)
+\end{align*}
+where the middle terms dissappear because they contain an odd number of $\gamma^{\mu}$, and the terms with an even number of $\gamma^{\mu}$ in the last term cancel out.
+\begin{center}
+\textit{Equal chiralities} $P=P_{R/L}$, $P'=P_{R/L}$
+\end{center}
+\begin{align*}
+\text{tr} \big[ 
+\cancel{k}_1 P_{R/L} (\cancel{p} + m_{\tilde{g}}) P_{R/L} \cancel{k}_2 P_{R/L} (\cancel{p} + m_{\tilde{g}}) P_{R/L} \big]=& \text{tr} \big[ 
+\cancel{k}_1 P_{R/L} \cancel{p} P_{R/L} \cancel{k}_2 P_{R/L} \cancel{p}  P_{R/L}
++ m_{\tilde{g}} \cancel{k}_1 P_{R/L} \cancel{p} P_{R/L} \cancel{k}_2 P_{R/L} P_{R/L}\\
+&+ m_{\tilde{g}} \cancel{k}_1 P_{R/L}P_{R/L} \cancel{k}_2 P_{R/L} \cancel{p} P_{R/L}
++ m_{\tilde{g}}^2 \cancel{k}_1 P_{R/L}  P_{R/L} \cancel{k}_2 P_{R/L} P_{R/L} \big]\\
+&= \frac{1}{4} \text{tr} \big[ m_{\tilde{g}}^2 \cancel{k}_1 \big( 1 \pm \gamma^5 \big) \cancel{k}_2 \big( 1 \pm \gamma^5 \big)\big]\\
+&= \frac{1}{2} \text{tr} \big[ m_{\tilde{g}}^2 \cancel{k}_1 \cancel{k}_2\big] = 2  m_{\tilde{g}}^2 (k_1 \cdot k_2)
+\end{align*}
+where we've used that $P_{R/L}P_{R/L} = P_{R/L}$, $(\gamma^5)^2 = 1$ and $\text{tr}[\gamma^5 \gamma^{\mu} \gamma^{\nu}]=0$. Now clean up using the following Mandelstam variables
+\begin{align}
+s &= (k_1 + k_2)^2 = 2 k_1 \cdot k_2\\
+t &= (k_2-p_2)^2 = m_{\tilde{q}}^2 - 2 (k_2 \cdot p_2), &t_1 = t - m_{\tilde{q}}^2\\
+u &= (k_1 - p_2)^2 = m_{\tilde{q}}^2 - 2 (k_1 \cdot p_2),  &u_1 = u - m_{\tilde{q}}^2
+\end{align}
+\begin{align*}
+&2(2 (p \cdot k_2) (k_1 \cdot p) - p^2 (k_1 \cdot k_2) ) + 2m_{\tilde{g}}^2 (k_1 \cdot k_2)\\ &= 4((k_2 - p_2) \cdot k_2) (k_1 \cdot (k_2-p_2)) - 2t (k_1 \cdot k_2) + 2m_{\tilde{g}}^2 (k_1 \cdot k_2)\\
+&=-4(p_2 \cdot k_2)(k_1 \cdot k_2 - k_1 \cdot p_2) - 2t(k_1 \cdot k_2) + 2m_{\tilde{g}}^2 (k_1 \cdot k_2)\\
+&= -4 (p_2 \cdot k_2)(k_1 \cdot k_2) + 4(p_2 \cdot k_2)(k_1 \cdot p_2) - 2t (k_1 \cdot k_2) + 2m_{\tilde{g}}^2 (k_1 \cdot k_2)\\
+&= 4 \frac{1}{2}(t-m_{\tilde{q}}^2)\cdot \frac{1}{2}s + 4 \frac{1}{2}(t-m_{\tilde{q}}^2)\cdot \frac{1}{2}(u-m_{\tilde{q}}^2)-  ts + m_{\tilde{g}}^2 s\\
+&= t_1s+t_1u_1 -ts\\
+&= t_1u_1 - s(t-t_1) m_{\tilde{g}}^2 s = 2 \big[t_1u_1 -s(m_{\tilde{q}}^2 - m_{\tilde{g}}^2) \big].
+\end{align*}
+Now put this back into the expression 
+\begin{align*}
+\sum |\mathcal{M}|^2 &=   (t_a)^{ij} (t^a)^{lk} (t_b)^{mn} (t^b)^{op}  \times\frac{4 g^4}{t_g^2}  \big[t_1u_1 -s(m_{\tilde{q}}^2- m_{\tilde{g}}^2) \big].
+\end{align*}
+We still need to sum over colors, and we use the relation
+\begin{align*}
+\sum_a (t^a)_{ij}(t^a)_{lk} = \frac{1}{2} \big(\delta_{ik} \delta_{lj} - \frac{1}{N} \delta_{ij} \delta_{lk} \big).
+\end{align*}
+Combine the factors
+\begin{align*}
+(t^a)^{ij}(t_a)^{kl}(t^b)_{ij}(t_b)^{kl} &= \frac{1}{4} 
+\big(\delta_{ik} \delta_{lj} - \frac{1}{N} \delta_{ij} \delta_{lk} \big)
+\big(\delta^{ik} \delta^{lj} - \frac{1}{N} \delta^{ij} \delta^{lk} \big)\\
+&= \frac{1}{4} \Big(\delta_{ik} \delta_{lj}\big(\delta^{ik} \delta^{lj} - \frac{1}{N} \delta^{ij} \delta^{lk} \big) - \frac{1}{N} \delta_{ij} \delta_{lk}\big(\delta^{ik} \delta^{lj} - \frac{1}{N} \delta^{ij} \delta^{lk} \big) \Big)\\
+&= \frac{1}{4} \Big(\big(N N - \frac{1}{N} N \big)  - \frac{1}{N} \big(N - \frac{1}{N} N N \big) \Big)\\
+&= \frac{1}{4} (N^2 - 1) = \frac{1}{2}NC_F,
+\end{align*}
+where we have defined $C_F = \frac{N^2 -1}{2}$. Adding a factor $2$ because we are summing over the different chiralities, the full expression for the $t$-channel is then
+\begin{align*}
+\sum |\mathcal{M}_t|^2 &= NC_F \frac{4g^4}{t_g^2} \big[ t_1u_1-s(m_{\tilde{q}}^2-m_{\tilde{g}}^2) \big]
+\end{align*}
+\end{flushleft}
+
+\begin{flushleft}
+The expression for the $u$-channel diagram is identical, except the exchange of $t_g^2 \rightarrow u_g^2$ and a different color factor
+\begin{align*}
+\sum |\mathcal{M}_u|^2 = A^2_{color, u} \frac{4 g^4}{u_g^2} [u_1 t_1 - s(m_{\tilde{q}}^2 - m_{\tilde{g}}^2)]. 
+\end{align*}
+The color factor becomes
+\begin{align*}
+\sum_{a,b}(t^a)^{ik}(t_a)^{jl}(t^b)_{ik}(t_b)_{jl} &= \frac{1}{4}(\delta_{ij}\delta_{lk}-\frac{1}{N}\delta_{ik}\delta_{jl})(\delta^{ij}\delta^{lk}-\frac{1}{N}\delta^{ik}\delta^{jl})\\
+&= \frac{1}{4} \big(\delta_{ij}\delta_{lk}(\delta^{ij}\delta^{lk}-\frac{1}{N}\delta^{ik}\delta^{jl}) -\frac{1}{N}\delta_{ik}\delta_{jl}(\delta^{ij}\delta^{lk}-\frac{1}{N}\delta^{ik}\delta^{jl}) \big)\\
+&= \frac{1}{4} \big(\delta_{ij}\delta^{ij} \delta_{kl} \delta^{kl} - \frac{1}{N} \delta^{jk}\delta_{kj} - \frac{1}{N} \delta^{jk}\delta_{jk} + \frac{1}{N^2} \delta_{ik} \delta^{ik} \delta_{jl} \delta^{jl} \big)\\
+&= \frac{1}{4} (N^2-1).
+\end{align*}
+Since we are summing over the different parity combinations we add a factor of $2$, and the total $u$-channel contribution becomes
+\begin{align*}
+\sum |\mathcal{M}_u|^2 &= NC_F 4g^4 \Big( \frac{u_1 t_1 - s(m_{\tilde{q}}^2 - m_{\tilde{g}}^2)}{t_g^2} \Big)
+\end{align*}
+\end{flushleft}
+
+\subsection*{Cross term}
+\begin{flushleft}
+The cross term comes from
+\begin{align*}
+i \mathcal{M}_{ut} &= A_{color, ut}\frac{-i 2 g^2}{t_g}\big( \bar{v} (k_1)  P (\cancel{p} + m_{\tilde{g}}) P'u(k_2) \big)  \frac{i 2 g^2}{u_g} \big( \bar{u} (k_2)  P (\cancel{p} + m_{\tilde{g}}) P' v(k_1) \big)\\
+\sum \mathcal{M}_{ut} &= A_{color, ut} \frac{4 g^4}{u_gt_g}\big( \cancel{k}_1   P (\cancel{k}_2 - \cancel{p}_2 + m_{\tilde{g}}) P'\cancel{k}_2  P (\cancel{k}_2 -\cancel{p}_1 + m_{\tilde{g}}) P' \big)\\
+\end{align*}
+Average over spins
+\begin{align*}
+\sum  \mathcal{M}_{ut} &=  A_{color, ut} \frac{4 g^4}{u_gt_g}\big( \text{tr} \big[ \cancel{k}_1 P_{L/R} (\cancel{k}_2 - \cancel{p}_2)P_{R/L} \cancel{k}_2(\cancel{k}_2-\cancel{p}_1) \big] + \text{tr} \big[ \cancel{k}_1 m_{\tilde{g}} \cancel{k}_2 m_{g}^2 \big]\big)\\
+&= A_{color, ut} \frac{4 g^4}{u_gt_g} \big(
+ \text{tr} \big[ \frac{1}{2}\Big(1 - \gamma^5 \Big) \cancel{k}_1 (\cancel{k}_2 - \cancel{p}_2) \cancel{k}_2(\cancel{k}_2-\cancel{p}_1) \big] + \text{tr} \big[\frac{1}{2} m_{\tilde{g}}^2 \cancel{k}_1  \cancel{k}_2\big]
+  \big)\\
+&= A_{color, ut} \frac{4 g^4}{u_gt_g} \big(
+ \frac{1}{2} \text{tr} \big[\Big(1 - \gamma^5 \Big) \big( \cancel{k}_1 \cancel{k}_2 \cancel{k}_2\cancel{p}_2 -  \cancel{k}_1 \cancel{k}_2 \cancel{k}_2\cancel{k}_1 -  \cancel{k}_1 \cancel{p}_2 \cancel{k}_2\cancel{p}_2 +  \cancel{k}_1 \cancel{p}_2 \cancel{k}_2\cancel{k}_1 \big) \big] + \text{tr} \big[\frac{1}{2} m_{\tilde{g}}^2 \cancel{k}_1  \cancel{k}_2\big]
+  \big)\\
+&= A_{color, ut} \frac{4 g^4}{u_gt_g} \big(
+ \frac{1}{2} \text{tr} \big[\Big(1 - \gamma^5 \Big) \big(k_2^2 (\cancel{k}_1 \cancel{p}_2 -  \cancel{k}_1 \cancel{k}_1)
+  -  \cancel{k}_1 (2 p_2 \cdot k_2 -  \cancel{k}_2\cancel{p}_2)\cancel{p}_2 +  (2k_1 \cdot p_2 - \cancel{p}_2 \cancel{k}_1 )(2k_2 \cdot k_1 - \cancel{k}_1\cancel{k}_2) \big) \big] + \text{tr} \big[\frac{1}{2} m_{\tilde{g}}^2 \cancel{k}_1  \cancel{k}_2\big]
+  \big)\\
+ &= A_{color, ut} \frac{4 g^4}{u_gt_g} \big(
+ \frac{1}{2} \text{tr} \big[\Big(1 - \gamma^5 \Big) \big(
+  -   2 p_2 \cdot k_2\cancel{k}_1\cancel{p}_2 + p_2^2  \cancel{k}_1\cancel{k}_2 \\
+&  + (2k_1 \cdot p_2)(2k_2 \cdot k_1) - (2k_1 \cdot p_2)\cancel{k}_1\cancel{k}_2 - \cancel{p}_2 \cancel{k}_1(2k_2 \cdot k_1) + k_1^2\cancel{p}_2 \cancel{k}_2 \big) \big] + \frac{1}{2} m_{\tilde{g}}^2 \cancel{k}_1  \cancel{k}_2\big]
+  \big)\\
+  &=  A_{color, ut} \frac{4 g^4}{u_gt_g} \big(
+  -   (2 p_2 \cdot k_2)(2k_1 \cdot p_2) + p_2^2  (2k_1 \cdot k_2) \\
+&  + 2(2k_1 \cdot p_2)(2k_2 \cdot k_1) - (2k_1 \cdot p_2)(2k_1 \cdot k_2) - (2 p_2 \cdot k_1)(2k_2 \cdot k_1) 
++  m_{\tilde{g}}^2 (2k_1 \cdot k_2) 
+  \big)\\
+&=  A_{color, ut} \frac{4 g^4}{u_gt_g} \big(
+  -   t_1 u_1 + p_2^2  s  + 2(-u_1)s + u_1s +u_1s 
++  m_{\tilde{g}}^2 s
+  \big)\\
+  &=  A_{color, ut} \frac{4 g^4}{u_gt_g} \big(
+  -   t_1 u_1 + m_{\tilde{q}}^2 s 
++  m_{\tilde{g}}^2 s
+  \big)\\
+\end{align*}
+The other counter term is similar, but yields a different order
+\begin{align*}
+\sum i \mathcal{M}_{tu} &= A_{color, tu} \frac{4 g^4}{u_gt_g}\big( \cancel{k}_1   P (\cancel{k}_2 - \cancel{p}_1 + m_{\tilde{g}}) P'\cancel{k}_2  P (\cancel{k}_2 -\cancel{p}_2 + m_{\tilde{g}}) P' \big)\\
+&= A_{color, ut} \frac{4 g^4}{u_gt_g} \big(
+ \text{tr} \big[ \frac{1}{2}\Big(1 - \gamma^5 \Big) \cancel{k}_1 (\cancel{k}_2 - \cancel{p}_1) \cancel{k}_2(\cancel{k}_2-\cancel{p}_2) \big] + \text{tr} \big[\frac{1}{2} m_{\tilde{g}}^2 \cancel{k}_1  \cancel{k}_2\big]
+  \big)\\
+  &= A_{color, ut} \frac{4 g^4}{u_gt_g} \big(
+ \frac{1}{2} \text{tr} \big[\Big(1 - \gamma^5 \Big) \cancel{k}_1 (\cancel{p}_2 - \cancel{k}_1 - \cancel{k}_2) \cancel{k}_2\cancel{p}_2  \big] + \text{tr} \big[\frac{1}{2} m_{\tilde{g}}^2 \cancel{k}_1  \cancel{k}_2\big]
+  \big)\\
+  &= A_{color, ut} \frac{4 g^4}{u_gt_g} \big(
+ \frac{1}{2} \text{tr} \big[\Big(1 - \gamma^5 \Big) \big( \cancel{k}_1 \cancel{p}_2 \cancel{k}_2\cancel{p}_2 - \cancel{k}_1\cancel{k}_1 \cancel{k}_2\cancel{p}_2 - \cancel{k}_1 \cancel{k}_2 \cancel{k}_2\cancel{p}_2  \big)\big] + \text{tr} \big[\frac{1}{2} m_{\tilde{g}}^2 \cancel{k}_1  \cancel{k}_2\big]
+  \big)\\
+  &= A_{color, ut} \frac{4 g^4}{u_gt_g} \big(
+ \frac{1}{2} \text{tr} \big[\Big(1 - \gamma^5 \Big) \big( \cancel{k}_1 \cancel{p}_2 (2 (k_2 \cdot p_2)- \cancel{p}_2\cancel{k}_2)  \big)\big] + \text{tr} \big[\frac{1}{2} m_{\tilde{g}}^2 \cancel{k}_1  \cancel{k}_2\big]
+  \big)\\
+&= A_{color, ut} \frac{4 g^4}{u_gt_g} \big(
+ \frac{1}{2} \text{tr} \big[ \cancel{k}_1 \cancel{p}_2 (2 k_2 \cdot p_2)- p_2^2\cancel{k}_1 \cancel{k}_2)  \big] + \text{tr} \big[\frac{1}{2} m_{\tilde{g}}^2 \cancel{k}_1  \cancel{k}_2\big]
+  \big)\\
+  &=  A_{color, ut} \frac{4 g^4}{u_gt_g} \big(
+(2k_1 \cdot p_2) (2 k_2 \cdot p_2)- p_2^2(2 k_1 \cdot k_2)  \big] + m_{\tilde{g}}^2(2 k_1 \cdot k_2)
+  \big)\\
+  &= A_{color, ut} \frac{4 g^4}{u_gt_g} \big(
+u_1t_1- m_{\tilde{q}}^2s + m_{\tilde{g}}^2s
+  \big).
+\end{align*}
+Adding the counter terms then gives 
+\begin{align*}
+\sum |\mathcal{M}_{ut+tu}| &= A_{color, ut} \frac{4 g^4}{u_gt_g} \big(2 m_{\tilde{g}}^2s   \big).
+\end{align*}
+The color factor is
+\begin{align*}
+\sum_{a,b}(t^a)^{ij}(t_a)^{kl}(t^b)_{ik}(t_b)_{jl} &= \frac{1}{4}(\delta_{ik}\delta_{lj}-\frac{1}{N}\delta_{ij}\delta_{kl})(\delta^{ij}\delta^{lk}-\frac{1}{N}\delta^{ik}\delta^{jl})\\
+ &= \frac{1}{4} \big(\delta_{ik}\delta_{lj}(\delta^{ij}\delta^{lk}-\frac{1}{N}\delta^{ik}\delta^{jl}) -\frac{1}{N}\delta_{ij}\delta_{kl}(\delta^{ij}\delta^{lk}-\frac{1}{N}\delta^{ik}\delta^{jl})\big)\\
+ &= \frac{1}{4} \big(N-\frac{1}{N}N^2 - \frac{1}{N}N^2 + \frac{1}{N^2} N \big)\\
+ &= - \frac{1}{4}\big(N -\frac{1}{N} \big)\\
+ &= - \frac{1}{2}C_F
+\end{align*}
+\end{flushleft}
+
+\begin{flushleft}
+Now, combining the terms, noting that the $u$-channel will only contribute for same-flavour quarks, we find
+\begin{align*}
+\sum |\mathcal{M}|^2 =& \delta_{ij}  4g^4\Big[NC_F(u_1t_1-sm_{\tilde{q}}^2) \big( \frac{1}{t_g^2} + \frac{1}{u_g^2} \big) + NC_Fsm_{\tilde{g}}^2\big(\frac{1}{t_g^2} + \frac{1}{u_g^2}\big) -2C_F\frac{sm_{\tilde{g}}^2}{u_gt_g} \Big]\\
+&+ (1-\delta_{ij})4g^4NC_F \Big[\frac{u_1t_1-s(m_{\tilde{g}}^2-m_{\tilde{g}}^2)}{t_g^2} \Big].
+\end{align*}
+\end{flushleft}
+
+
+\pagebreak
+
+\section*{Appendix A}
+\subsection*{Feynman rules}
+\begin{flushleft}
+The following Feynman rules are from \cite{ellis2003qcd} and \cite{beenakker1997squark}. External quarks and squarks
+\begin{align*}
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (s); \vertex [right=of s, dot] (p) {};
+\diagram{(s) -- [charged scalar] (p)};
+\end{feynman}
+\end{tikzpicture}
+= 1,
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (s); \vertex [right=of s, dot] (p) {};
+\diagram{(p) -- [charged scalar] (s)};
+\end{feynman}
+\end{tikzpicture}
+= 1,
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (s); \vertex [right=of s, dot] (p) {};
+\diagram{(s) -- [fermion, momentum] (p)};
+\end{feynman}
+\end{tikzpicture} = u(P),
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (s); \vertex [left=of s, dot] (p) {};
+\diagram{(s) -- [fermion] (p), (p) --[momentum] (s)};
+\end{feynman}
+\end{tikzpicture} = \bar{v}(P).
+\end{align*}
+Propagator
+\begin{align*}
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (s) {a}; \vertex [right=of s] (p) {b};
+\diagram{(s) -- [fermion] (p) --[gluon] (s)};
+\end{feynman}
+\end{tikzpicture} = \delta^{ab} \frac{i}{\cancel{p}-m_{\tilde{g}}},
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (p1) {a}; \vertex [below right=of p1] (p); \vertex [below left=of p] (p2) {i}; \vertex [right=of p] (s);
+\diagram{(p1) --[fermion] (p) --[gluon] (p1), (p2) --[fermion] (p), (p) -- [scalar, edge label={j}](s) };
+\end{feynman}
+\end{tikzpicture} = - i \sqrt{2} g P_{L/R} (t_a)^{ij},
+\end{align*}
+where the small arrows indicate the reading direction.
+\end{flushleft}
+
+\pagebreak
+
+\section{Prospino}
+\subsection*{Why NLO terms?}
+\begin{flushleft}
+Calculating the NLO terms should reduce the dependence on the renormalization scale considerably, thereby making the predictions less uncertain. Cross sections have been calculated to NLO for the following squark masses.
+\end{flushleft}
+
+\section{Experimental tests}
+\begin{flushleft}
+Squark production should be characterized by the production of jets and missing momentum, owing to the lightest supersymmetric particle $\chi_1^0$ (neutralino). This is a possible candidate for dark matter. Possible signatures to look for at the LHC are
+\begin{align*}
+q_iq_j \rightarrow \tilde{q}_i \tilde{q}_j \rightarrow \tilde{\chi}_1^0 \tilde{\chi}_1^0 q_i q_j, \tilde{\chi}_1^0 \tilde{\chi}_1^0 q_i q_j WW, \tilde{\chi}_1^0 \tilde{\chi}_1^0 q_i q_j W Z/h.
+\end{align*}
+We consider final states containing only hadronic jets and large missing transverse momentum.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{feynman}
+\vertex (p1) {\(p\)}; \vertex [below right=of p1, blob] (p) {}; \vertex [below left=of p] (p2){\(p\)}; \vertex [above right=of p] (s1);
+\vertex [below right=of p] (s2);
+\vertex [right=of s1] (q1) {\(\tilde{\chi}_1^0\)}; \vertex [right=of s2] (q2) {\(\tilde{\chi}_1^0\)}; \vertex [above=of q1] (q11) {\(q\)}; \vertex [below=of q2] (q22) {\(q\)};
+\diagram{
+(p1)--(p)--(p2), (p) --[scalar, edge label={\(\tilde{q}\)}] (s1), (p) --[scalar, edge label={\(\tilde{q}\)}] (s2); (s1) --[photon, plain] (q1); (s1) -- (q11); (s2) --[photon, plain] (q2); (s2) -- (q22)
+};
+\end{feynman}
+\end{tikzpicture}
+\end{figure}
+\end{flushleft}
+
+
+\bibliographystyle{plain}
+\bibliography{susy_project}
+
+\end{document}
