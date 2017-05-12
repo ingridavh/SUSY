@@ -19,6 +19,8 @@ public:
     double m_alpha;
     const double m_pi;
     int m_i;
+    int m_error_count;
+    int m_no_prob;
 };
 
 #endif // SIGMA_H
